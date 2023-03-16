@@ -21,7 +21,7 @@ git clone https://github.com/waynedovey/Hub-ClusterSeed.git
 cd Hub-ClusterSeed
 ```
 
-### Ensure Ansible is installed 
+### Ensure Ansible is installed (Password Available from Author)
 
 ```
 ansible-vault decrypt sealed-secrets/hub.*
