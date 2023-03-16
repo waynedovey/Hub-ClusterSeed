@@ -1,0 +1,20 @@
+apiVersion: v1
+data:
+  config: |
+    [Global]
+    secret-name = "vsphere-creds"
+    secret-namespace = "kube-system"
+    insecure-flag = "1"
+
+    [Workspace]
+    server = "vmware.digitaldovey.net"
+    datacenter = "Datacenter"
+    default-datastore = "Fast-Datastore"
+    folder = "/Datacenter/vm/hub-lab"
+
+    [VirtualCenter "vmware.digitaldovey.net"]
+    datacenters = "Datacenter"
+kind: ConfigMap
+metadata:
+  name: cloud-provider-config
+  namespace: openshift-config
