@@ -1,0 +1,24 @@
+apiVersion: hive.openshift.io/v1
+kind: ClusterDeployment
+metadata:
+  name: sno-bm
+  namespace: sno-bm
+spec:
+  baseDomain: ocp-poc-demo.run
+  clusterName: sno-bm
+  controlPlaneConfig:
+    servingCertificates: {}
+  installed: false
+  clusterInstallRef:
+    group: extensions.hive.openshift.io
+    kind: AgentClusterInstall
+    # aci == AgentClusterInstall
+    name: sno-bm
+    version: v1beta1
+  platform:
+    agentBareMetal:
+      agentSelector:
+        matchLabels:
+          cluster-name: "sno-bm"
+  pullSecretRef:
+    name: pull-secret

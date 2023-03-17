@@ -1,0 +1,28 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: sno-bm
+  namespace: sno-bm
+  annotations:
+    argocd.argoproj.io/sync-options: Validate=false
+spec:
+#  proxy:
+#    httpProxy: <proxy>
+#    httpsProxy: <proxy>
+#    noProxy: <domain-or-ips-comma-sepparated>
+#  additionalNTPSources:
+#    - 0.rhel.pool.ntp.org
+  clusterRef:
+    name: sno-bm
+    namespace: sno-bm
+  sshAuthorizedKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDI0C7v3nrPyl6szdam99kd5DYTBq5/FP/YljGNnrCqGUdOZT2pIMppWTx9C/JgB2Qw/iVGYBT7sAOw1rbCP/47jJpx/QSmiIxPLhVcdeUMRwea7q7e+Gm94t7TJWKpb6X3clsz0K3bjtZ5Khy/FSn/xgZ1kNGp6oaKi7l4D629KQOI2Ke9b5j+lVEDD0dDPUZiYqa9JHIV0aviaNYRKxyAZ4cMLoDkih0+qvu2xzawvRj/IHtqJyFzIcg2pxy00uJiCOkbq+Wi/qBCfWIydt7auknE4ITAs1CTCVR6a9zLSjXlNXr287XxTlrodd/6w/rIJz8CUtKsjyn6JzIq1qMFNBbvpTVChsLRh5NoQ5FmFiodBkAW0DowRJSE7nWPvP2ffTGbI623rom5/mt46RPIVPrEL9EJPurHMrpN+xsFAyWrOh8lJ7+h2+iPkG8tTez903E5/JTn2cKdhRo9qIpm/630VsI/Rc7TB/cjhBhHQ7gWLCBA7KFuvuMv56QmxPc= ocpuser@bastion-local.ocp-poc-demo.com'
+  agentLabelSelector:
+    matchLabels:
+      cluster-name: sno-bm
+  pullSecretRef:
+    name: pull-secret
+  nmStateConfigLabelSelector:
+    matchLabels:
+      cluster-name: sno-bm
+# User for modify ignition during discovery
+#  ignitionConfigOverride: ''

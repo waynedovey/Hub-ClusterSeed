@@ -1,0 +1,109 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-router-certs-local-cluster
+  namespace: default
+  annotations:
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+  generation: 1
+spec:
+  disabled: false
+  remediationAction: enforce
+  severity: low
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-router-certs-ingress-local-cluster
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: bitnami.com/v1alpha1
+                kind: SealedSecret
+                metadata:
+                  name: router-certs
+                  namespace: openshift-ingress
+                  annotations:
+                    sealedsecrets.bitnami.com/cluster-wide: "true"
+                  creationTimestamp:
+                spec:
+                  encryptedData:
+                    tls.crt: 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
+                    tls.key: AgANd/zXjY7yisnSiKM20mEisSXceVimww+aOsMWXwe7/M+gxY+etPW8ddJ1brsHgxL/Lm36p1NgbQJsI1Yefd8kPu5Y+gIHfW2d5sbOFls9jq6tM/kQXbNPr4+cZg7OCJhiJ1LUOKenY1xOIr7qpDpUyzq0TYTQosk70aH+tYZPc5u6CZ7yhxDYVog7O3GRXMfi/+Xw/x7SSXheqlzB35Xi/it/I1wCZ/EAHGd2bh1mD5vAoTP46s9vEXwW0pelk5ayIc9XyyFzkIPwYNz+wxwMHEE4IKISwEQHb+AiGV/Y52klz6N8MdMrUDTxk2mDFUDAP9oOXgkzHESZzUDMK9IyMKp1EzS3hM41X6q4dQqi5mvGTS7V7ZV69gHm/sZVuepyUj5w3m/J73r1cK5q4/mBUPg3a824VwH9diG46otGhzSDC/lCzcDY8CAAGL7uxvUDSx6IC2KacFj5FLww09nqQWBQacF6ZsOzlv8T99A8pBEpobOmXr4OgnnfyblPk3USow5GsYFB+tI/midfidDRFrl4ZQcqtYNHomK1T0tfATbrqQ5UtlPBXYAWcPucsEksRpspmJ4het7JLPDYRJw3iUya2IVzINN+/6sOVtsF6bJOYXVy9igPitXAUbrgAWAJE9ulR56LhJJPBAdPj016VR4Iy95yiPzj5NuYf4Qh5wI8BjHYepD7ki8OYw2t/v4EMjlEPUBUs2OjoSSzGeo+ZFqM9W7stPn+GjYJQgt60rAhA+bYuxU4K9IKG09fYELk3xJmoBlIuA2e/MpOfI+DjGuXHclNE1B7ithj4rkEzWgVwyf7Cm0NljSPpwBGuZEO0PCDVZ+E3FfgCSmpjRR6qAJeLb9cC7B9W2TVtvNFK9rtoi0WUxUsy0cUAkHm/DgX8c/85aFdzDpHdnjm5Fa+UGJTMLkOphs4HWprqThYk7aJz21OtTgb49ryB43nXefVhcUPT94vnfY1xegCGzOHTjh5eCJVr2isT+Xt4gTzkrxpMw==
+                  template:
+                    metadata:
+                      name: router-certs
+                      namespace: openshift-ingress
+                      annotations:
+                        sealedsecrets.bitnami.com/cluster-wide: "true"
+                      creationTimestamp:
+                    type: kubernetes.io/tls
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-router-ingress-operator-local-cluster
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operator.openshift.io/v1
+                kind: IngressController
+                metadata:
+                  name: default
+                  namespace: openshift-ingress-operator
+                spec:
+                  clientTLS:
+                    clientCA:
+                      name: ""
+                    clientCertificatePolicy: ""
+                  defaultCertificate:
+                    name: router-certs
+                  httpCompression: {}
+                  httpEmptyRequestsPolicy: Respond
+                  httpErrorCodePages:
+                    name: ""
+                  replicas: 2
+                  tuningOptions:
+                    reloadInterval: 0s
+                  unsupportedConfigOverrides: null
+                status: {}
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: policy-router-certs-local-cluster-placement
+  namespace: default
+spec:
+  clusterSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:
+          - local-cluster
+  clusterConditions: []
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: policy-router-certs-local-cluster-placement-binding
+  namespace: default
+placementRef:
+  name: policy-router-certs-local-cluster-placement
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+subjects:
+  - name: policy-router-certs-local-cluster
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy

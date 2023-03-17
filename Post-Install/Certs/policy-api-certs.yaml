@@ -1,0 +1,96 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-api-certs-local-cluster
+  namespace: default
+  annotations:
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+  generation: 1
+spec:
+  disabled: false
+  remediationAction: enforce
+  severity: low
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-api-certs-local-cluster
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: bitnami.com/v1alpha1
+                data:
+                  tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUVQVENDQThLZ0F3SUJBZ0lRRkVQOUxEVDl3aUhKblRqSEk3RjkrekFLQmdncWhrak9QUVFEQXpCTE1Rc3cKQ1FZRFZRUUdFd0pCVkRFUU1BNEdBMVVFQ2hNSFdtVnliMU5UVERFcU1DZ0dBMVVFQXhNaFdtVnliMU5UVENCRgpRME1nUkc5dFlXbHVJRk5sWTNWeVpTQlRhWFJsSUVOQk1CNFhEVEl6TURNeE5qQXdNREF3TUZvWERUSXpNRFl4Ck5ESXpOVGsxT1Zvd0p6RWxNQ01HQTFVRUF4TWNZWEJwTG1oMVlpMXNZV0l1WkdsbmFYUmhiR1J2ZG1WNUxtNWwKZERCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQk9UKzhvQjVRRmY4dGVaTW5OYStFTS9LZ2xKQQp2M3c4NUFrOFVwYnQ2U1ZMRnYxSWo0ZDh2YWlRYWRqOE43akZjL0VTcVlNQVVTVG5tMjA3b1FidDRzcWpnZ0txCk1JSUNwakFmQmdOVkhTTUVHREFXZ0JRUGErWkx6amxIcnZaK2tCNTU4RENSa3NoZm96QWRCZ05WSFE0RUZnUVUKVWNlTlBzaGJZQ1U2elU4Rjd2cko2RXNWMWF3d0RnWURWUjBQQVFIL0JBUURBZ2VBTUF3R0ExVWRFd0VCL3dRQwpNQUF3SFFZRFZSMGxCQll3RkFZSUt3WUJCUVVIQXdFR0NDc0dBUVVGQndNQ01Fa0dBMVVkSUFSQ01FQXdOQVlMCkt3WUJCQUd5TVFFQ0FrNHdKVEFqQmdnckJnRUZCUWNDQVJZWGFIUjBjSE02THk5elpXTjBhV2R2TG1OdmJTOUQKVUZNd0NBWUdaNEVNQVFJQk1JR0lCZ2dyQmdFRkJRY0JBUVI4TUhvd1N3WUlLd1lCQlFVSE1BS0dQMmgwZEhBNgpMeTk2WlhKdmMzTnNMbU55ZEM1elpXTjBhV2R2TG1OdmJTOWFaWEp2VTFOTVJVTkRSRzl0WVdsdVUyVmpkWEpsClUybDBaVU5CTG1OeWREQXJCZ2dyQmdFRkJRY3dBWVlmYUhSMGNEb3ZMM3BsY205emMyd3ViMk56Y0M1elpXTjAKYVdkdkxtTnZiVENDQVFVR0Npc0dBUVFCMW5rQ0JBSUVnZllFZ2ZNQThRQjJBSzMzdnZwOC94RElpNTA5bkI0KwpHR3EwWnlsZHo3RU1KTXFGaGpUcjNJS0tBQUFCaHV4ZEtETUFBQVFEQUVjd1JRSWhBTEExUEJGWXVLZUNXcjJaCkM5ekExVnhhSXJSRGV4SEVDRStIV3FnWUs3RlBBaUIzK1BzeW5Jc0QwL0dvUXpISDRBelVUelV2MUE0aFlxUXoKRjE0Nnp2dFFYZ0IzQUhveWpGVFl0eTIySU9vNDRGSWU2WVFXY0RJVGhVMDcwaXZCT2xlalV1dFNBQUFCaHV4ZApLSkVBQUFRREFFZ3dSZ0loQU15ZWpoeENKTFRBYk1hWFNhSDhoOFRXK0lIdi9ZS21YN1d6R29xMkc5eUtBaUVBCnNtdEtJMURhbzRqTlJXbm93RCsvT3BPZG9MbG9Rd0NaYWxPNGlDSkk1OG93U0FZRFZSMFJCRUV3UDRJY1lYQnAKTG1oMVlpMXNZV0l1WkdsbmFYUmhiR1J2ZG1WNUxtNWxkSUlmS2k1aGNIQnpMbWgxWWkxc1lXSXVaR2xuYVhSaApiR1J2ZG1WNUxtNWxkREFLQmdncWhrak9QUVFEQXdOcEFEQm1BakVBbXkraUYvSXdSclN6VzFvMXl6RGNWM2tSCklWdGVWOFpBU291UjJBUHBPVkg3TDNJMGFzZ3huTnhqNmh3OWZXcmhBakVBalJxWS81SytyZGwxTkt2azRwd2EKTXZOSEU5VXlWbkxDVmJIcDdxczhRWXJ0NWx2S3MyVC83TUl3Sy9ZMW5yZVIKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQotLS0tLUJFR0lOIENFUlRJRklDQVRFLS0tLS0KTUlJRGhUQ0NBd3lnQXdJQkFnSVFJN2R0NDhHN0t4cFJsaDRJNnJkazZEQUtCZ2dxaGtqT1BRUURBekNCaURFTApNQWtHQTFVRUJoTUNWVk14RXpBUkJnTlZCQWdUQ2s1bGR5QktaWEp6WlhreEZEQVNCZ05WQkFjVEMwcGxjbk5sCmVTQkRhWFI1TVI0d0hBWURWUVFLRXhWVWFHVWdWVk5GVWxSU1ZWTlVJRTVsZEhkdmNtc3hMakFzQmdOVkJBTVQKSlZWVFJWSlVjblZ6ZENCRlEwTWdRMlZ5ZEdsbWFXTmhkR2x2YmlCQmRYUm9iM0pwZEhrd0hoY05NakF3TVRNdwpNREF3TURBd1doY05NekF3TVRJNU1qTTFPVFU1V2pCTE1Rc3dDUVlEVlFRR0V3SkJWREVRTUE0R0ExVUVDaE1ICldtVnliMU5UVERFcU1DZ0dBMVVFQXhNaFdtVnliMU5UVENCRlEwTWdSRzl0WVdsdUlGTmxZM1Z5WlNCVGFYUmwKSUVOQk1IWXdFQVlIS29aSXpqMENBUVlGSzRFRUFDSURZZ0FFTmtGaEZ5dFRKZTJxeXBUazF0cElWKzlRdW9SawpndGU3QlJ2V0h3WWs5cVV6bll6bjhRdFZhR09DTUJCZmpXWHNxcWl2bDhxMWhzNHdBWWwwM3VOT1hnRnU3aVo3CnpGUDZJNlQzUkIwK1RSNWZacWF0aGZieTQ3eU9DWmlBSkk0Z280SUJkVENDQVhFd0h3WURWUjBqQkJnd0ZvQVUKT3VFSmh0VFBHY0tXZG5SSmR0emdOY1pqWTVvd0hRWURWUjBPQkJZRUZBOXI1a3ZPT1VldTluNlFIbm53TUpHUwp5RitqTUE0R0ExVWREd0VCL3dRRUF3SUJoakFTQmdOVkhSTUJBZjhFQ0RBR0FRSC9BZ0VBTUIwR0ExVWRKUVFXCk1CUUdDQ3NHQVFVRkJ3TUJCZ2dyQmdFRkJRY0RBakFpQmdOVkhTQUVHekFaTUEwR0N5c0dBUVFCc2pFQkFnSk8KTUFnR0JtZUJEQUVDQVRCUUJnTlZIUjhFU1RCSE1FV2dRNkJCaGo5b2RIUndPaTh2WTNKc0xuVnpaWEowY25WegpkQzVqYjIwdlZWTkZVbFJ5ZFhOMFJVTkRRMlZ5ZEdsbWFXTmhkR2x2YmtGMWRHaHZjbWwwZVM1amNtd3dkZ1lJCkt3WUJCUVVIQVFFRWFqQm9NRDhHQ0NzR0FRVUZCekFDaGpOb2RIUndPaTh2WTNKMExuVnpaWEowY25WemRDNWoKYjIwdlZWTkZVbFJ5ZFhOMFJVTkRRV1JrVkhKMWMzUkRRUzVqY25Rd0pRWUlLd1lCQlFVSE1BR0dHV2gwZEhBNgpMeTl2WTNOd0xuVnpaWEowY25WemRDNWpiMjB3Q2dZSUtvWkl6ajBFQXdNRFp3QXdaQUl3SkhCVUR3SEpRTjNJClZObHRWTXJJQ01xWVEzVFlQL1RYcVY5dDhtRzVjQW9tRzJNd3FJc3huTDkzN0dld2Y2V0lBakFscmF1a3NPNk4KVXVEZERYeWQzMzBkcnVKY1pKeDArSDVqNWNGT1lCYUdzS2RlR1c3c0NNYVIyUHNERktHbGxhcz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQotLS0tLUJFR0lOIENFUlRJRklDQVRFLS0tLS0KTUlJRDB6Q0NBcnVnQXdJQkFnSVFWbWNkQk9wUG1VeHZFSUZIV2RKMWxEQU5CZ2txaGtpRzl3MEJBUXdGQURCNwpNUXN3Q1FZRFZRUUdFd0pIUWpFYk1Ca0dBMVVFQ0F3U1IzSmxZWFJsY2lCTllXNWphR1Z6ZEdWeU1SQXdEZ1lEClZRUUhEQWRUWVd4bWIzSmtNUm93R0FZRFZRUUtEQkZEYjIxdlpHOGdRMEVnVEdsdGFYUmxaREVoTUI4R0ExVUUKQXd3WVFVRkJJRU5sY25ScFptbGpZWFJsSUZObGNuWnBZMlZ6TUI0WERURTVNRE14TWpBd01EQXdNRm9YRFRJNApNVEl6TVRJek5UazFPVm93Z1lneEN6QUpCZ05WQkFZVEFsVlRNUk13RVFZRFZRUUlFd3BPWlhjZ1NtVnljMlY1Ck1SUXdFZ1lEVlFRSEV3dEtaWEp6WlhrZ1EybDBlVEVlTUJ3R0ExVUVDaE1WVkdobElGVlRSVkpVVWxWVFZDQk8KWlhSM2IzSnJNUzR3TEFZRFZRUURFeVZWVTBWU1ZISjFjM1FnUlVORElFTmxjblJwWm1sallYUnBiMjRnUVhWMAphRzl5YVhSNU1IWXdFQVlIS29aSXpqMENBUVlGSzRFRUFDSURZZ0FFR3F4VVdxbjVhQ1BuZXRVa2IxUEdXdGhMCnE4YlZ0dEhtYzNHdTNaeldER0g5MjZDSkE3Z0ZGT3hYenU1ZFArSWhzODczMUlwNTRLT0RmaTJYMEdIRThabmMKSlpGanEzOHdvN1J3NHNlaE01enp2eTVjVTdGZnMzMHlmNG8wNDNsNW80SHlNSUh2TUI4R0ExVWRJd1FZTUJhQQpGS0FSQ2lNK2x2RUg3T0t2S2UrQ3BYL1FNS1MwTUIwR0ExVWREZ1FXQkJRNjRRbUcxTThad3BaMmRFbDIzT0ExCnhtTmptakFPQmdOVkhROEJBZjhFQkFNQ0FZWXdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QVJCZ05WSFNBRUNqQUkKTUFZR0JGVWRJQUF3UXdZRFZSMGZCRHd3T2pBNG9EYWdOSVl5YUhSMGNEb3ZMMk55YkM1amIyMXZaRzlqWVM1agpiMjB2UVVGQlEyVnlkR2xtYVdOaGRHVlRaWEoyYVdObGN5NWpjbXd3TkFZSUt3WUJCUVVIQVFFRUtEQW1NQ1FHCkNDc0dBUVVGQnpBQmhoaG9kSFJ3T2k4dmIyTnpjQzVqYjIxdlpHOWpZUzVqYjIwd0RRWUpLb1pJaHZjTkFRRU0KQlFBRGdnRUJBQm5zNjUySkxDQUxCSUFkR041Q21YS1pGaks5RHB4MVd5d1Y0aWxBYmU3L2N0dmJxNUFmakpYeQppajBJY2tLSlVBZmlPUlZzQVlmWkZocjF3SFVyeGVaV0VRZmYySmk4Zko4Wk9kK0x5Z0JrYzd4R0VKdVRJNDIrCkZzTXVDSUtjaGpOMGRqc29USTBEUW9XejRySWpRdFVmZW5WcUd0RjhxbWNoeERNNk9XMVR5YUx0WWlLb3UrSlYKYkpsc1EydVJsOUVNQzVNQ0hkSzhhWGRKNWh0Tjk3OFVlQU93cHJvTHRPR0ZmeS9jUWp1dGRBRkkzdFpzNFJtWQpDVjRLczJkSC9oemcxY0VvNzBxTFJERW1CRGVOaVhRMkx1K2xJZytEZEVtU3gvY1F3Z3dwKzdlOXVuL2pYOVdmCjhxbjBkTlc0NGJPd2dlVGhwV09qek9vRWVKQnV2L2M9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+                  tls.key: LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUlHKzhsNnI2aEc4dGVWdVhIMmFaTVIxb0RTdDRKKzNQUForb25YdEh4Q0dvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFNVA3eWdIbEFWL3kxNWt5YzFyNFF6OHFDVWtDL2ZEemtDVHhTbHUzcEpVc1cvVWlQaDN5OQpxSkJwMlB3M3VNVno4UktwZ3dCUkpPZWJiVHVoQnUzaXlnPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo=
+                kind: Secret
+                metadata:
+                  name: api-certs
+                  namespace: openshift-config
+                type: kubernetes.io/tls                  
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-api-config-local-cluster
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: config.openshift.io/v1
+                kind: APIServer
+                metadata:
+                  annotations:
+                    include.release.openshift.io/ibm-cloud-managed: "true"
+                    include.release.openshift.io/self-managed-high-availability: "true"
+                    include.release.openshift.io/single-node-developer: "true"
+                    oauth-apiserver.openshift.io/secure-token-storage: "true"
+                    release.openshift.io/create-only: "true"
+                  name: cluster
+                spec:
+                  audit:
+                    profile: Default
+                  servingCerts:
+                    namedCertificates:
+                    - names:
+                      - api.hub-lab.digitaldovey.net
+                      servingCertificate:
+                        name: api-certs                  
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: policy-api-certs-local-cluster-placement
+  namespace: default
+spec:
+  clusterSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:
+          - local-cluster
+  clusterConditions: []
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: policy-api-certs-local-cluster-placement-binding
+  namespace: default
+placementRef:
+  name: policy-api-certs-local-cluster-placement
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+subjects:
+  - name: policy-api-certs-local-cluster
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy

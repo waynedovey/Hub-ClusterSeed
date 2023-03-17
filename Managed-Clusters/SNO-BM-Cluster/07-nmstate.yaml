@@ -1,0 +1,37 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: sno-bm
+  namespace: sno-bm
+  labels:
+    cluster-name: sno-bm
+spec:
+  config:
+    dns-resolver:
+      config:
+        search:
+          - ocp-poc-demo.run
+        server:
+          - 192.168.100.2
+    interfaces:
+      - ipv4:
+          address:
+            - ip: 192.168.100.8
+              prefix-length: 24
+          dhcp: false
+          enabled: true
+        ipv6:
+          enabled: false
+        macAddress: '52:54:00:20:99:f6'
+        name: enp1s0
+        state: up
+        type: ethernet
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.100.1
+          next-hop-interface: enp1s0
+          table-id: 254
+  interfaces:
+    - macAddress: '52:54:00:20:99:f6'
+      name: enp1s0

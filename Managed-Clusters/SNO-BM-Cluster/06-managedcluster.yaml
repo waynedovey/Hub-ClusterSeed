@@ -1,0 +1,10 @@
+apiVersion: cluster.open-cluster-management.io/v1
+kind: ManagedCluster
+metadata:
+  name: sno-bm
+  namespace: sno-bm
+  labels:
+    name: sno-bm
+spec:
+  hubAcceptsClient: true
+  leaseDurationSeconds: 60
