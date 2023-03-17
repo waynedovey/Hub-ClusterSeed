@@ -27,6 +27,29 @@ cd Hub-ClusterSeed
 ansible-vault decrypt sealed-secrets/hub.*
 ```
 
+## Update the follow files for your environment
+
+### VMware Variable 
+
+```
+Assisted-Installer-Storage/cloud-provider-config.yaml
+```
+```
+Assisted-Installer-Storage/vsphere-creds-sealed.yaml
+```
+```
+Assisted-Installer-Storage/vsphere-sc.yaml
+```
+
+### Authentication settings 
+
+```
+Post-Install/policy-cluster-admin-role.yaml
+```
+```
+Post-Install/policy-github-oauth.yaml
+```
+
 ## Run the Seed script
 
 ```
