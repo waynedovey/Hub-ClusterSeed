@@ -46,6 +46,7 @@ done
 # Enable CIM sevice
 
 oc apply -f agent_service_config.yaml
+oc apply -f provisioning-configuration.yaml
 
 # Enable Post-Install Policies 
 
