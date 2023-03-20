@@ -55,3 +55,7 @@ Post-Install/policy-github-oauth.yaml
 ```
 ./seed-acm.sh
 ```
+
+#### Reference SSL Certs
+
+https://computingforgeeks.com/use-lets-encrypt-wildcard-certificates-on-openshift-ingress-routes/
