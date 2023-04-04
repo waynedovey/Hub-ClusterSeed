@@ -41,7 +41,7 @@ done
 
 # Enable VMware StorageClass
 
-./Assisted-Installer-Storage/update-vmware.sh
+#./Assisted-Installer-Storage/update-vmware.sh
 
 # Enable CIM sevice
 
