@@ -50,4 +50,4 @@ oc apply -f provisioning-configuration.yaml
 
 # Enable Post-Install Policies 
 
-oc apply -k Post-Install/
+#oc apply -k Post-Install/
