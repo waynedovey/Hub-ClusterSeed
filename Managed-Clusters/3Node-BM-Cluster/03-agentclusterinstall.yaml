@@ -5,6 +5,8 @@ metadata:
     agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"OVNKubernetes"}}'
   labels:
     app.kubernetes.io/instance: clusters
+    agentclusterinstalls.extensions.hive.openshift.io/location: sydney
+    networkType: static
   name: test-cluster
   namespace: test-cluster
 spec:
@@ -17,7 +19,7 @@ spec:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
     machineNetwork:
-      - cidr: 192.168.100.0/24
+      - cidr: 192.168.38.0/24
     serviceNetwork:
       - 172.30.0.0/16
   provisionRequirements:
