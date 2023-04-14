@@ -1,24 +1,23 @@
 apiVersion: hive.openshift.io/v1
 kind: ClusterDeployment
 metadata:
-  name: sno-bm
-  namespace: sno-bm
+  name: test-cluster
+  namespace: test-cluster
 spec:
-  baseDomain: ocp-poc-demo.run
-  clusterName: sno-bm
+  baseDomain: digitaldovey.net
+  clusterName: test-cluster
   controlPlaneConfig:
     servingCertificates: {}
   installed: false
   clusterInstallRef:
     group: extensions.hive.openshift.io
     kind: AgentClusterInstall
-    # aci == AgentClusterInstall
-    name: sno-bm
+    name: test-cluster
     version: v1beta1
   platform:
     agentBareMetal:
       agentSelector:
         matchLabels:
-          cluster-name: "sno-bm"
+          cluster-name: "test-cluster"
   pullSecretRef:
     name: pull-secret

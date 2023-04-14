@@ -1,8 +1,8 @@
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:
-  name: sno-bm
-  namespace: sno-bm
+  name: test-cluster
+  namespace: test-cluster
 spec:
   applicationManager:
     argocdCluster: false
@@ -10,11 +10,11 @@ spec:
   certPolicyController:
     enabled: true
   clusterLabels:
-    name: sno-bm
+    name: test-cluster
     cloud: Baremetal
     vendor: auto-detect
-  clusterName: sno-bm
-  clusterNamespace: sno-bm
+  clusterName: test-cluster
+  clusterNamespace: test-cluster
   iamPolicyController:
     enabled: true
   policyController:

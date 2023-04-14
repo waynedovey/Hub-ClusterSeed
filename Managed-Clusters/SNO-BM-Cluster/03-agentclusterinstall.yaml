@@ -3,19 +3,15 @@ kind: AgentClusterInstall
 metadata:
   annotations:
     agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"OVNKubernetes"}}'
-    argocd.argoproj.io/sync-wave: '1'
-    ran.openshift.io/ztp-gitops-generated: '{}'
   labels:
     app.kubernetes.io/instance: clusters
-  name: sno-bm
-  namespace: sno-bm
+  name: test-cluster
+  namespace: test-cluster
 spec:
   clusterDeploymentRef:
-    name: sno-bm
+    name: test-cluster
   imageSetRef:
-    name: openshift-v4.11.17
-#  manifestsConfigMapRef:
-#    name: sno-bm
+    name: openshift-v4.12.12
   networking:
     clusterNetwork:
       - cidr: 10.128.0.0/14
@@ -25,5 +21,5 @@ spec:
     serviceNetwork:
       - 172.30.0.0/16
   provisionRequirements:
-    controlPlaneAgents: 1
-  sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDI0C7v3nrPyl6szdam99kd5DYTBq5/FP/YljGNnrCqGUdOZT2pIMppWTx9C/JgB2Qw/iVGYBT7sAOw1rbCP/47jJpx/QSmiIxPLhVcdeUMRwea7q7e+Gm94t7TJWKpb6X3clsz0K3bjtZ5Khy/FSn/xgZ1kNGp6oaKi7l4D629KQOI2Ke9b5j+lVEDD0dDPUZiYqa9JHIV0aviaNYRKxyAZ4cMLoDkih0+qvu2xzawvRj/IHtqJyFzIcg2pxy00uJiCOkbq+Wi/qBCfWIydt7auknE4ITAs1CTCVR6a9zLSjXlNXr287XxTlrodd/6w/rIJz8CUtKsjyn6JzIq1qMFNBbvpTVChsLRh5NoQ5FmFiodBkAW0DowRJSE7nWPvP2ffTGbI623rom5/mt46RPIVPrEL9EJPurHMrpN+xsFAyWrOh8lJ7+h2+iPkG8tTez903E5/JTn2cKdhRo9qIpm/630VsI/Rc7TB/cjhBhHQ7gWLCBA7KFuvuMv56QmxPc= ocpuser@bastion-local.ocp-poc-demo.com
+    controlPlaneAgents: 3
+  sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXjDwr19GjyeqiSOeiQ6+nlHS7U2GLpOt6MydDxXrC3Yhv1Tw5aVA/K7Pl4sfApnAJucZIAOvPfB7eECX/N2OlcUSJlOHUDZBSWR93YhUjvHROOb7pkYDXC+hRKdPtiwvVyDhyKW7ejE4qcD3lpJoM+LbiR3q8R4Jf+3LQyW6UPvR0JkKIPiZNOiCAiVywb9lcHZaaghB08rzfbZqXyaTvciz9Xx/O5F/id2fb9Ab35GO2I4PILEKOokuMr/8KlDraTdJeuKGW+JEIg/AqlRFpUyEyP2WLgph+X3XxDYqjSKeOGi44Iumi8L7px7cnNSPlpOeLyDVQMMJPNzEAzVj1SMwBS12W51DDNQAirTWv46JDsP1QTJYbB3Z2ByrM3pZ+wAlSTzZ7GcWaoG6TPL81PKjNljVci60HyQN7VvGlWJD7VDNAFJjtZpfx0gbKnXp9sP56et7QKqZnL5Pchk5S/nKUdjS5kBPFjmkoPCzs3fL3KoHph48/4tiUpxHnPls= root@bastion
