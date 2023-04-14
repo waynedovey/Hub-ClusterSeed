@@ -22,7 +22,7 @@ spec:
           enabled: true
         ipv6:
           enabled: false
-        macAddress: '00:50:56:a2:44:b5'
+        macAddress: '00:50:56:a2:c1:53'
         name: ens192
         state: up
         type: ethernet
@@ -33,7 +33,7 @@ spec:
           next-hop-interface: ens192
           table-id: 254
   interfaces:
-    - macAddress: '00:50:56:a2:44:b5'
+    - macAddress: '00:50:56:a2:c1:53'
       name: ens192
 ---
 apiVersion: agent-install.openshift.io/v1beta1

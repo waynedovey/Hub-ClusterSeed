@@ -11,4 +11,3 @@ resources:
   - 06-managedcluster.yaml
   - 07-nmstate.yaml
   - 08-infraenv.yaml
-#  - 09-baremetalhost.yaml

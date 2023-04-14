@@ -5,7 +5,6 @@ metadata:
   namespace: test-cluster
 spec:
   applicationManager:
-    argocdCluster: false
     enabled: true
   certPolicyController:
     enabled: true
