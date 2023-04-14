@@ -14,6 +14,8 @@ spec:
     name: test-cluster
   imageSetRef:
     name: img4.12.12-x86-64-appsub
+  apiVIP: "192.168.38.105"
+  ingressVIP: "192.168.38.106"
   networking:
     clusterNetwork:
       - cidr: 10.128.0.0/14

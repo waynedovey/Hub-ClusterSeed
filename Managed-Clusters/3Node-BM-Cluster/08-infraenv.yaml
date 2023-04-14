@@ -3,6 +3,9 @@ kind: InfraEnv
 metadata:
   name: test-cluster
   namespace: test-cluster
+  labels:
+    agentclusterinstalls.extensions.hive.openshift.io/location: sydney
+    networkType: static
 spec:
 #  proxy:
 #    httpProxy: <proxy>
