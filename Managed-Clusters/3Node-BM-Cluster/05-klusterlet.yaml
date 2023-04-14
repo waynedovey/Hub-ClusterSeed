@@ -1,0 +1,23 @@
+apiVersion: agent.open-cluster-management.io/v1
+kind: KlusterletAddonConfig
+metadata:
+  name: test-cluster
+  namespace: test-cluster
+spec:
+  applicationManager:
+    enabled: true
+  certPolicyController:
+    enabled: true
+  clusterLabels:
+    name: test-cluster
+    cloud: Baremetal
+    vendor: auto-detect
+  clusterName: test-cluster
+  clusterNamespace: test-cluster
+  iamPolicyController:
+    enabled: true
+  policyController:
+    enabled: true
+  searchCollector:
+    enabled: true
+  version: 2.6.2

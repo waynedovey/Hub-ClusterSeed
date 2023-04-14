@@ -1,0 +1,25 @@
+apiVersion: extensions.hive.openshift.io/v1beta1
+kind: AgentClusterInstall
+metadata:
+  annotations:
+    agent-install.openshift.io/install-config-overrides: '{"networking":{"networkType":"OVNKubernetes"}}'
+  labels:
+    app.kubernetes.io/instance: clusters
+  name: test-cluster
+  namespace: test-cluster
+spec:
+  clusterDeploymentRef:
+    name: test-cluster
+  imageSetRef:
+    name: img4.12.12-x86-64-appsub
+  networking:
+    clusterNetwork:
+      - cidr: 10.128.0.0/14
+        hostPrefix: 23
+    machineNetwork:
+      - cidr: 192.168.100.0/24
+    serviceNetwork:
+      - 172.30.0.0/16
+  provisionRequirements:
+    controlPlaneAgents: 3
+  sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXjDwr19GjyeqiSOeiQ6+nlHS7U2GLpOt6MydDxXrC3Yhv1Tw5aVA/K7Pl4sfApnAJucZIAOvPfB7eECX/N2OlcUSJlOHUDZBSWR93YhUjvHROOb7pkYDXC+hRKdPtiwvVyDhyKW7ejE4qcD3lpJoM+LbiR3q8R4Jf+3LQyW6UPvR0JkKIPiZNOiCAiVywb9lcHZaaghB08rzfbZqXyaTvciz9Xx/O5F/id2fb9Ab35GO2I4PILEKOokuMr/8KlDraTdJeuKGW+JEIg/AqlRFpUyEyP2WLgph+X3XxDYqjSKeOGi44Iumi8L7px7cnNSPlpOeLyDVQMMJPNzEAzVj1SMwBS12W51DDNQAirTWv46JDsP1QTJYbB3Z2ByrM3pZ+wAlSTzZ7GcWaoG6TPL81PKjNljVci60HyQN7VvGlWJD7VDNAFJjtZpfx0gbKnXp9sP56et7QKqZnL5Pchk5S/nKUdjS5kBPFjmkoPCzs3fL3KoHph48/4tiUpxHnPls= root@bastion
