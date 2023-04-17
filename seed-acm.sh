@@ -30,6 +30,8 @@ done
 
 # Enable Sealed Secrets 
 
+sleep 120
+
 oc apply -f sealed-secrets/sealed-secrets.yaml
 until kubectl -n kube-system  get pods -l app.kubernetes.io/name=sealed-secrets | grep Running 2> /dev/null
 do
