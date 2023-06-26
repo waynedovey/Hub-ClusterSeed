@@ -8,16 +8,16 @@ spec:
     - ReadWriteOnce
     resources:
       requests:
-        storage: 10Gi
+        storage: 100Gi
   filesystemStorage:
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
-        storage: 10Gi
+        storage: 100Gi
   imageStorage:
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
-        storage: 10Gi
+        storage: 100Gi
