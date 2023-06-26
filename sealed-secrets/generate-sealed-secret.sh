@@ -19,3 +19,11 @@ kubectl -n  "$NAMESPACE" delete pods -l app.kubernetes.io/name=sealed-secrets
 sleep 30
 
 kubectl -n "$NAMESPACE" logs -l app.kubernetes.io/name=sealed-secrets
+
+# Seal a secret 
+wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.22.0/kubeseal-0.22.0-linux-amd64.tar.gz
+tar -zxvf kubeseal-0.22.0-linux-amd64.tar.gz
+mv kubeseal /usr/local/bin/
+
+#export PUBLICKEY="./hub.crt"
+#kubeseal --format yaml --cert "${PUBLICKEY}" --scope cluster-wide < router-certs.yaml > router-certs-ss.yaml

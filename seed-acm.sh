@@ -6,8 +6,8 @@ if [ $? -eq 0 ]
 then
   oc create namespace open-cluster-management
   oc project open-cluster-management
-  oc create -f operator-group.yaml
-  oc create -f acm-operator-subscription.yaml
+  oc create -f ACM-install/operator-group.yaml
+  oc create -f ACM-install/acm-operator-subscription.yaml
 else
   echo "Login into the OpenShift Cluster" >&2
   exit 1
@@ -21,7 +21,7 @@ do
 done
 
 # Create the CRD
-oc create -f custom-resource.yaml
+oc create -f ACM-install/custom-resource.yaml
 until oc get mch -n open-cluster-management | grep Running 2> /dev/null
 do
     echo echo "Wait for CRD Installation"
@@ -47,9 +47,9 @@ done
 
 # Enable CIM sevice
 
-oc apply -f agent_service_config.yaml
-oc apply -f provisioning-configuration.yaml
+oc apply -f ACM-CIM/agent_service_config.yaml
+oc apply -f ACM-CIM/provisioning-configuration.yaml
 
 # Enable Post-Install Policies 
 
-#oc apply -k Post-Install/
+oc apply -k Post-Install/
