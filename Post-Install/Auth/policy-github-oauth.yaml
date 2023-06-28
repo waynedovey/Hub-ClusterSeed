@@ -41,7 +41,7 @@ spec:
                         organizations:
                           - digitaldovey
                         teams: 
-                          - digitaldovey/test-team-a
+                          - test-team-a
                       mappingMethod: claim
                       name: github
                       type: GitHub
