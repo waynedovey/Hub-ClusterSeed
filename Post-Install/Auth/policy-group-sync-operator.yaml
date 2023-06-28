@@ -87,7 +87,6 @@ spec:
                   - name: github
                     github:
                       organization: digitaldovey
-                      teams: digitaldovey/test-team-a
                       credentialsSecret:
                         name: github-group-sync
                         namespace: group-sync-operator
