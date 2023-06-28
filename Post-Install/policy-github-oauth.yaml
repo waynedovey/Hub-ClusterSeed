@@ -40,7 +40,8 @@ spec:
                         hostname: ''
                         organizations:
                           - digitaldovey
-                        teams: []
+                        teams: 
+                          - digitaldovey/test-team-a
                       mappingMethod: claim
                       name: github
                       type: GitHub
