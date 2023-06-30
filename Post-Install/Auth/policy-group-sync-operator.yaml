@@ -29,7 +29,11 @@ spec:
               objectDefinition:
                 apiVersion: v1
                 kind: Namespace
-                  name: group-sync-operator          
+                metadata:
+                  labels:
+                    kubernetes.io/metadata.name: group-sync-operator      
+                  name: group-sync-operator        
+
     - objectDefinition:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
