@@ -19,11 +19,6 @@ spec:
         spec:
           remediationAction: enforce
           severity: low
-          namespaceSelector:
-            exclude:
-              - kube-*
-            include:
-              - default
           object-templates:
             - complianceType: musthave
               objectDefinition:
@@ -42,11 +37,6 @@ spec:
         spec:
           remediationAction: enforce
           severity: low
-          namespaceSelector:
-            exclude:
-              - kube-*
-            include:
-              - default
           object-templates:
             - complianceType: musthave
               objectDefinition:
@@ -69,11 +59,6 @@ spec:
         spec:
           remediationAction: enforce
           severity: low
-          namespaceSelector:
-            exclude:
-              - kube-*
-            include:
-              - default
           object-templates:
             - complianceType: musthave
               objectDefinition:
@@ -93,11 +78,6 @@ spec:
         spec:
           remediationAction: enforce
           severity: low
-          namespaceSelector:
-            exclude:
-              - kube-*
-            include:
-              - default
           object-templates:
             - complianceType: musthave
               objectDefinition:
@@ -121,11 +101,6 @@ spec:
         spec:
           remediationAction: enforce
           severity: low
-          namespaceSelector:
-            exclude:
-              - kube-*
-            include:
-              - default
           object-templates:
             - complianceType: musthave
               objectDefinition:
