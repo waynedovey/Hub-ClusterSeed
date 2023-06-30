@@ -44,6 +44,7 @@ spec:
                 kind: Subscription
                 metadata:
                   name: group-sync-operator
+                  namespace: group-sync-operator 
                 spec:
                   channel: alpha
                   installPlanApproval: Automatic
@@ -66,6 +67,7 @@ spec:
                 kind: OperatorGroup
                 metadata:
                   name: group-sync-operator
+                  namespace: group-sync-operator 
                 spec:
                   targetNamespaces:
                     - group-sync-operator
@@ -85,6 +87,7 @@ spec:
                 kind: GroupSync
                 metadata:
                   name: github-groupsync
+                  namespace: group-sync-operator 
                 spec:
                   providers:
                   - name: github
