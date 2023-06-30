@@ -42,20 +42,20 @@ spec:
                   kind: ClusterRole
                   name: system:master
                   apiGroup: rbac.authorization.k8s.io
-            # - complianceType: musthave
-            #   objectDefinition:
-            #     kind: ClusterRoleBinding
-            #     apiVersion: rbac.authorization.k8s.io/v1
-            #     metadata:
-            #       name: cluster-admin
-            #     subjects:
-            #       - kind: Group
-            #         apiGroup: rbac.authorization.k8s.io
-            #         name: sre-team
-            #     roleRef:
-            #       apiGroup: rbac.authorization.k8s.io
-            #       kind: ClusterRole
-            #       name: cluster-admin
+            - complianceType: musthave
+              objectDefinition:
+                kind: ClusterRoleBinding
+                apiVersion: rbac.authorization.k8s.io/v1
+                metadata:
+                  name: cluster-admin
+                subjects:
+                  - kind: Group
+                    apiGroup: rbac.authorization.k8s.io
+                    name: sre-team
+                roleRef:
+                  apiGroup: rbac.authorization.k8s.io
+                  kind: ClusterRole
+                  name: cluster-admin
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding

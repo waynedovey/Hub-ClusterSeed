@@ -9,5 +9,5 @@ resources:
  - Auth/policy-github-oauth.yaml
  - Auth/policy-cluster-admin-role.yaml
  - Auth/policy-group-sync-operator.yaml
-# - Certs/policy-api-certs.yaml  
+ - Certs/policy-api-certs.yaml  
  - Certs/policy-router-certs.yaml   
