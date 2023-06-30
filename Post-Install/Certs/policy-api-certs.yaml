@@ -29,7 +29,7 @@ spec:
                 kind: SealedSecret
                 metadata:
                   name: api-certs
-                  namespace: openshift-ingress
+                  namespace: openshift-config
                   annotations:
                     sealedsecrets.bitnami.com/cluster-wide: "true"
                   creationTimestamp:
@@ -40,7 +40,7 @@ spec:
                   template:
                     metadata:
                       name: api-certs
-                      namespace: openshift-ingress
+                      namespace: openshift-config
                       annotations:
                         sealedsecrets.bitnami.com/cluster-wide: "true"
                       creationTimestamp:
