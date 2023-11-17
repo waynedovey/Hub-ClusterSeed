@@ -1,0 +1,154 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-group-sync-operator-local-cluster
+  namespace: default
+  annotations:
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: group-sync-namespace
+        spec:
+          remediationAction: enforce
+          severity: low
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Namespace
+                metadata:
+                  labels:
+                    kubernetes.io/metadata.name: group-sync-operator      
+                  name: group-sync-operator        
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: group-sync-operator
+        spec:
+          remediationAction: enforce
+          severity: low
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1alpha1
+                kind: Subscription
+                metadata:
+                  name: group-sync-operator
+                  namespace: group-sync-operator 
+                spec:
+                  channel: alpha
+                  installPlanApproval: Automatic
+                  name: group-sync-operator
+                  source: community-operators
+                  sourceNamespace: openshift-marketplace
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: group-sync-operator-group
+        spec:
+          remediationAction: enforce
+          severity: low
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1
+                kind: OperatorGroup
+                metadata:
+                  name: group-sync-operator
+                  namespace: group-sync-operator 
+                spec:
+                  targetNamespaces:
+                    - group-sync-operator
+    
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: group-sync-operator-provider
+        spec:
+          remediationAction: enforce
+          severity: low
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: redhatcop.redhat.io/v1alpha1
+                kind: GroupSync
+                metadata:
+                  name: github-groupsync
+                  namespace: group-sync-operator 
+                spec:
+                  providers:
+                  - name: github
+                    github:
+                      organization: digitaldovey
+                      credentialsSecret:
+                        name: github-group-sync
+                        namespace: group-sync-operator
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: group-sync-secret
+        spec:
+          remediationAction: enforce
+          severity: low
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: bitnami.com/v1alpha1
+                kind: SealedSecret
+                metadata:
+                  annotations:
+                    sealedsecrets.bitnami.com/cluster-wide: "true"
+                  name: github-group-sync
+                  namespace: group-sync-operator
+                spec:
+                  encryptedData:
+                    token: AgBt6LdRO4wKmHahtx0r6iee9ZYDH8Qw2yTchwQs9WstV4wjobdjyjWc0EZuRrODHLLlLEePoDKOvVGPDQOMv066CvcQ3Iiw1cHND/u22rMMcusmgEsObuaSaJBxdKxwfWoQhovEgpB4kLPtwOxNng2SAsxECA+Ln8KmFF99L4OKfmCKRNpeMWqCuLKGg4Re6CXe072yVwTjxR2GUgeLroxy/E/gpAaDATUu7WKZKzO4J3RqctIQPIrraXIXiuYl0wJheSXlGXI2M9kBZfdnIBCXnGJUF+n1IIioUgjRuUoyM4va8GdQVIoe1huYQXqa+gHGFcaiN8gcoe36b7D042hTYLj8Wl9vDTbFjyyWczlQ4g6E5ueDeXMQmFcp5kcDiJA/+bfqB/0ZVq2cHpsCZnEwUjWUHdd8GfMzLFNazJYn2nbN7yfpYNhXKI0zuVp+EDDQRaCdsIoWFQECfQS1/jq2k0ped0vj6dx2DMLjyTRGSdmA/UfLhigq3KD7MDKoNBwj8gdIz621ARecsLMIEkg6jtR/6zrmZbNbrzaU0Zl2Lghpwh03J8FOxGPtNmOoIbWzvwXqWJupABrelKoDWZMvlFZIOHq90HdnZhTEDX85JgF1DfbZErkmH35TqOW6GEJSoaBaHtKG5VVe01Lz3jIoxi36f8rDxV5ABdwJRTSnyIhcgVUonGxkLz/N/VJwNW73ponXTS5xycCixnVUKYsQKm7flkWj7lHmMsJOyUSm60LYdfus8i++
+                  template:
+                    metadata:
+                      annotations:
+                        sealedsecrets.bitnami.com/cluster-wide: "true"
+                      name: github-group-sync
+                      namespace: group-sync-operator
+                    type: Opaque
+
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-policy-group-sync-operator-local-cluster
+  namespace: default
+placementRef:
+  name: placement-policy-group-sync-operator-local-cluster
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: policy-group-sync-operator-local-cluster
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-group-sync-operator-local-cluster
+  namespace: default
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: name, operator: In, values: ["local-cluster"]}

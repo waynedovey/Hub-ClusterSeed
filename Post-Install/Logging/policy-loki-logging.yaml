@@ -1,0 +1,115 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-logging
+  annotations:
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+  generation: 1
+spec:
+  disabled: false
+  remediationAction: enforce
+  severity: low
+  policy-templates:
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-logging-namespace
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Namespace
+                metadata:
+                  name: openshift-logging
+                  annotations:
+                    openshift.io/node-selector: ""
+                  labels:
+                    openshift.io/cluster-logging: "true"
+                    openshift.io/cluster-monitoring: "true"
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-logging-operator-group
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1
+                kind: OperatorGroup
+                metadata:
+                  annotations:
+                  name: cluster-logging-operator
+                  namespace: openshift-logging
+                spec:
+                  targetNamespaces:
+                  - openshift-logging
+                  upgradeStrategy: Default
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-logging-subscription
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1alpha1
+                kind: Subscription
+                metadata:
+                  labels:
+                    operators.coreos.com/cluster-logging.openshift-logging: ""
+                  name: cluster-logging
+                  namespace: openshift-logging
+                spec:
+                  channel: stable
+                  installPlanApproval: Automatic
+                  name: cluster-logging
+                  source: redhat-operators
+                  sourceNamespace: openshift-marketplace
+                  startingCSV: cluster-logging.v5.7.2
+                     
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: policy-logging-placement
+  namespace: default
+spec:
+  clusterSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:
+          - local-cluster
+  clusterConditions: []
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: policy-logging-placement-binding
+  namespace: default
+placementRef:
+  name: policy-logging-placement
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+subjects:
+  - name: policy-logging
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy

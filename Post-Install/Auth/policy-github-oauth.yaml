@@ -1,0 +1,105 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-github-oauth-local-cluster
+  namespace: default
+  annotations:
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: github-oauth
+        spec:
+          remediationAction: enforce
+          severity: low
+          namespaceSelector:
+            exclude:
+              - kube-*
+            include:
+              - default
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: config.openshift.io/v1
+                kind: OAuth
+                metadata:
+                  name: cluster
+                spec:
+                  identityProviders:
+                    - github:
+                        clientID: e9540e3f4caf2b825cb7
+                        clientSecret:
+                          name: github-hub-lab-secret
+                        hostname: ''
+                        organizations:
+                          - digitaldovey
+                      mappingMethod: claim
+                      name: github
+                      type: GitHub
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: github-hub-lab-secret 
+        spec:
+          remediationAction: enforce
+          severity: low
+          namespaceSelector:
+            exclude:
+              - kube-*
+            include:
+              - default
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: bitnami.com/v1alpha1
+                kind: SealedSecret
+                metadata:
+                  annotations:
+                    sealedsecrets.bitnami.com/cluster-wide: "true"
+                  name: github-hub-lab-secret
+                  namespace: openshift-config
+                spec:
+                  encryptedData:
+                    clientSecret: AgAIOI6U5v4IQeJjJDdb9XsuCbXbCnOEPErucbR9L1VjBLvCnmdAJVdYCp9pj64CVhXWf28jk9bmBvPpnN17L9kCxCl5iQhS6vvdqXnjVbQaGi7p2td38rGXBc08JG3l0vyYMBnIx3i4lYiyXdXLb4Y/NCCjLnaHILWr92RvArJVQokSaJHKTBWhowxab1Q3iKS8nRLzTf+2g1Hn4R2pA9gFHe3OSBiPzKmYg+uX2R8xdUItmgiTi2V1tW9apESTTieYBwMFAeydRpWtJ83ptYJ8UW5ebW4ERl4Ul2kIoJA2/oiIqS2iuwNtVzzZPvDW7weJfmvGNV0F7l1cxBLI6puC45RpkFSIQK0EHVlQR85fGJLL37fHQRqS9FcxQ4HRW2KBKeRFHTJLrOG9Zt6EaR9DO9n+PQ0SMUXy3VTgndMg5JlTUoXt379E5b2dS2J7Cd2qVmPge/wjWS44B93qfChT8YDGp2V3L/guq+orNg3le9CRe2BhnU8o89lyjDkwS5MmQzUw9bcMIPAecpTdJNmM21fXuvCnGL2I3TEhxdctHCp/0Mw5ravjHzNHLTwkhtLZXzri5WPD3O1KsT534xvmP8cKMIjKw8bShKoqAEfa6KjwQFL5SHndQu0PBHo9Q3qxXJb612QvXhiRQHFs6MOWZx8ZKLA3o/lqVns8oPmHAKriUHDxkxXUYtTXXMYAAzj8oDCHn+QtRUkczcUAo1xOTOAqkD+9OyTyVYdNTqxsAKmIKKzHeCNs
+                  template:
+                    metadata:
+                      annotations:
+                        sealedsecrets.bitnami.com/cluster-wide: "true"
+                      name: github-hub-lab-secret
+                      namespace: openshift-config
+                    type: Opaque
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-policy-github-oauth-local-cluster
+  namespace: default
+placementRef:
+  name: placement-policy-github-oauth-local-cluster
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: policy-github-oauth-local-cluster
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-policy-github-oauth-local-cluster
+  namespace: default
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - {key: name, operator: In, values: ["local-cluster"]}

@@ -1,0 +1,23 @@
+---
+kind: SealedSecret
+apiVersion: bitnami.com/v1alpha1
+metadata:
+  name: vsphere-creds
+  namespace: kube-system
+  creationTimestamp:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: 'true'
+spec:
+  template:
+    metadata:
+      name: vsphere-creds
+      namespace: kube-system
+      creationTimestamp:
+      annotations:
+        cloudcredential.openshift.io/mode: passthrough
+        sealedsecrets.bitnami.com/cluster-wide: 'true'
+    type: Opaque
+  encryptedData:
+    vmware.digitaldovey.net.password: AgCuzaM6y/F7xEljmOju34ZT/uQWIU3BuDDiVbUQR8ELi5a4BhBcfqmH2PC1z4OErEZ85SiB1bF2w/frS+weNXoV7gFHrq0YDvkw54DjKH3hJArW8U6XP670tbATLoznp8DzjXpbfsIPb0/DPsPJtPoNTGZ2a7KUAynS//wXQH6og9o/BVf18+olvYoE1gBiG7HkNi8bHpD6xzYeiTtw6/NIyIWjLhj1ZGE0GOALyQChzNg0H/15VnURfcaXyue7drscepqfBF26hePq8IpAK3JY/Q8Nk2biNCaIpKlVg4ujPrdK+75Q2d3SGfzyOqE9uarGIAVYsWV9MtqKf3XQStPSJtQyYdz/P+0ta/Jinh2gRs6eexdWXtcZq3JDBsk15uf+UE9L2T7ZXd664wnGsWC30QVPpniPsdEzvwp9i3oXgeSDMejjusRMG1M56hoUssTpgOtNQG0VemQV9Anio9ySmeRykEb6xZ45BRdZswn68/+d6khpf/0Kx6ADJX3cvEqxTJcLlm3N89iX7gkcgbXexMDbvDDgm0pq8BxKuhMakd6+j/hFmx2PXauRQac5eL2tHutjsDubwboW8tJIwN4Zh2g4/AHqzrJ1pbtM9xeU/BuMw6hQvTSuN3f6Djfb8B4yxGkWaX9ah9/gqGb+bqcKNinBwP8M4du0+p/hpwrxj9tRBPKdf5xiJ5hRI6ZSjuW34kbOaN2CSp2D
+    vmware.digitaldovey.net.username: AgBr8y6iRKt/Uny8fjoiEDhEvYs73Au55ZZ+oIvQ+oqLl4ENoOdG9MI3s/y9yyBNr08qcOuIlfMhKRFQENTlhCGvMuPaAUqD6q0+375hmFvFW89PWd4XAjSIC9j+TCbzMfcMB1Qm1G/Hq8WxvasRJqTC3P0IuSEGmw215sL40rwTMmlXPF5eEUDSxTN1X7SSWoQbSjXsQviUgf5IGlSzkUJaLUDDlEsKraWwilrM0E057d97bJuFC9fhgU+0cuALlJ61iACVlPSH16GYyoRz6otqroJ3daIgt6c7fqLbC+iXDg5M7zqL7MHx88xaTyQ41NlD0H01z/zQ3UZbt+DOJzJXFfUSSP3TKyiT/0tKY8EBC3HfQHPLeMkl1ibKD+clvFDsGexsX9BNo6sLWOi+9yO9H8DV5b/XEt4t1Niv5ZKUmDs9GfLloIAS5NWmrnOGM+w3UEQe6X3pGWRxmRPTrKGgv42VMkBekUdA6DaKQhXIifdLzeGLOL/WfSeu18/QbMAfsFBOaoNqgMdHK6pgW36BXAetrz29i/mD4TPpi+KGeF3B8DqN9Sc/5J6XFkyM86v7lNBbSi0O6YF3AQ9VxGCDnmNLlLzMYnlbDdKw69+WLQijwCawT8FTS44ux2EaKJ7rvVmqa/REvIKR2aithpakcJizBJ3/dgPVRc44QLiiht39NCkyQ0E4H6eyZEF3tRqyTQ/SoIU0MiutNNPXR0/lxO1hiczAJpEjIsU=
+

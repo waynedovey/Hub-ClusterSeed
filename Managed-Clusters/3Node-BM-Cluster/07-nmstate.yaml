@@ -1,0 +1,114 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: m0-test-cluster
+  namespace: test-cluster
+  labels:
+    cluster-name: test-cluster
+spec:
+  config:
+    dns-resolver:
+      config:
+        search:
+          - digitaldovey.net
+        server:
+          - 10.2.192.12
+    interfaces:
+      - ipv4:
+          address:
+            - ip: 192.168.38.100
+              prefix-length: 24
+          dhcp: false
+          enabled: true
+        ipv6:
+          enabled: false
+        macAddress: '00:50:56:a2:c1:53'
+        name: ens192
+        state: up
+        type: ethernet
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.38.1
+          next-hop-interface: ens192
+          table-id: 254
+  interfaces:
+    - macAddress: '00:50:56:a2:c1:53'
+      name: ens192
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: m1-test-cluster
+  namespace: test-cluster
+  labels:
+    cluster-name: test-cluster
+spec:
+  config:
+    dns-resolver:
+      config:
+        search:
+          - digitaldovey.net
+        server:
+          - 10.2.192.12
+    interfaces:
+      - ipv4:
+          address:
+            - ip: 192.168.38.101
+              prefix-length: 24
+          dhcp: false
+          enabled: true
+        ipv6:
+          enabled: false
+        macAddress: '00:50:56:a2:62:ae'
+        name: ens192
+        state: up
+        type: ethernet
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.38.1
+          next-hop-interface: ens192
+          table-id: 254
+  interfaces:
+    - macAddress: '00:50:56:a2:62:ae'
+      name: ens192
+---
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: m2-test-cluster
+  namespace: test-cluster
+  labels:
+    cluster-name: test-cluster
+spec:
+  config:
+    dns-resolver:
+      config:
+        search:
+          - digitaldovey.net
+        server:
+          - 10.2.192.12
+    interfaces:
+      - ipv4:
+          address:
+            - ip: 192.168.38.102
+              prefix-length: 24
+          dhcp: false
+          enabled: true
+        ipv6:
+          enabled: false
+        macAddress: '00:50:56:a2:44:b5'
+        name: ens192
+        state: up
+        type: ethernet
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.38.1
+          next-hop-interface: ens192
+          table-id: 254
+  interfaces:
+    - macAddress: '00:50:56:a2:44:b5'
+      name: ens192
+

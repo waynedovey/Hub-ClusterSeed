@@ -1,0 +1,16 @@
+kind: Kustomization
+
+namespace: default
+
+#bases:
+#  - base
+
+resources:
+ - Auth/policy-github-oauth.yaml
+ - Auth/policy-cluster-admin-role.yaml
+ - Auth/policy-group-sync-operator.yaml
+ - Certs/policy-api-certs.yaml  
+ - Certs/policy-router-certs.yaml   
+ - Registry/policy-registry.yaml
+ - Logging/policy-logging.yaml
+ - AAP/policy-aap.yaml

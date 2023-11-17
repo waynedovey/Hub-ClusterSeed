@@ -1,0 +1,21 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: test-cluster
+  namespace: test-cluster
+spec:
+#  proxy:
+#    httpProxy: <proxy>
+#    httpsProxy: <proxy>
+#    noProxy: <domain-or-ips-comma-sepparated>
+#  additionalNTPSources:
+#    - 0.rhel.pool.ntp.org
+  clusterRef:
+    name: test-cluster
+    namespace: test-cluster
+  sshAuthorizedKey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDXjDwr19GjyeqiSOeiQ6+nlHS7U2GLpOt6MydDxXrC3Yhv1Tw5aVA/K7Pl4sfApnAJucZIAOvPfB7eECX/N2OlcUSJlOHUDZBSWR93YhUjvHROOb7pkYDXC+hRKdPtiwvVyDhyKW7ejE4qcD3lpJoM+LbiR3q8R4Jf+3LQyW6UPvR0JkKIPiZNOiCAiVywb9lcHZaaghB08rzfbZqXyaTvciz9Xx/O5F/id2fb9Ab35GO2I4PILEKOokuMr/8KlDraTdJeuKGW+JEIg/AqlRFpUyEyP2WLgph+X3XxDYqjSKeOGi44Iumi8L7px7cnNSPlpOeLyDVQMMJPNzEAzVj1SMwBS12W51DDNQAirTWv46JDsP1QTJYbB3Z2ByrM3pZ+wAlSTzZ7GcWaoG6TPL81PKjNljVci60HyQN7VvGlWJD7VDNAFJjtZpfx0gbKnXp9sP56et7QKqZnL5Pchk5S/nKUdjS5kBPFjmkoPCzs3fL3KoHph48/4tiUpxHnPls= root@bastion'
+  pullSecretRef:
+    name: pull-secret
+  nmStateConfigLabelSelector:
+    matchLabels:
+      cluster-name: test-cluster

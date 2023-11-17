@@ -1,0 +1,130 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-aap
+  annotations:
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+  generation: 1
+spec:
+  disabled: false
+  remediationAction: enforce
+  severity: low
+  policy-templates:
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-aap-namespace
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: v1
+                kind: Namespace
+                metadata:
+                  name: ansible-automation-platform
+                  annotations:
+                    openshift.io/node-selector: ""
+                  labels:
+                    openshift.io/cluster-logging: "true"
+                    openshift.io/cluster-monitoring: "true"
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-aap-operator-group
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1
+                kind: OperatorGroup
+                metadata:
+                  name: ansible-automation-platform-operator
+                  namespace: ansible-automation-platform
+                spec:
+                  targetNamespaces:
+                    - ansible-automation-platform
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-aap-subscription
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: operators.coreos.com/v1alpha1
+                kind: Subscription
+                metadata:
+                  name: ansible-automation-platform
+                  namespace: ansible-automation-platform
+                spec:
+                  channel: 'stable-2.4-cluster-scoped'
+                  installPlanApproval: Automatic
+                  name: ansible-automation-platform-operator
+                  source: redhat-operators
+                  sourceNamespace: openshift-marketplace
+
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-aap-controller
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: automationcontroller.ansible.com/v1beta1
+                kind: AutomationController
+                metadata:
+                  name: aap-controller
+                  namespace: ansible-automation-platform
+                spec:
+                  replicas: 1
+
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: policy-aap-placement
+  namespace: default
+spec:
+  clusterSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:
+          - local-cluster
+  clusterConditions: []
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: policy-aap-placement-binding
+  namespace: default
+placementRef:
+  name: policy-aap-placement
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+subjects:
+  - name: policy-aap
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy

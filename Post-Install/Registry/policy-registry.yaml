@@ -1,0 +1,75 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: policy-registry-local-cluster
+  namespace: default
+  annotations:
+    policy.open-cluster-management.io/categories: CM Configuration Management
+    policy.open-cluster-management.io/controls: CM-2 Baseline Configuration
+    policy.open-cluster-management.io/standards: NIST SP 800-53
+  generation: 1
+spec:
+  disabled: false
+  remediationAction: enforce
+  severity: low
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: policy-registry-local-cluster
+        spec:
+          namespaceSelector:
+            include:
+              - kube-system
+          object-templates:
+            - complianceType: musthave
+              objectDefinition:
+                apiVersion: imageregistry.operator.openshift.io/v1
+                kind: Config
+                metadata:
+                  name: cluster
+                spec:
+                  logLevel: Normal
+                  managementState: Managed
+                  observedConfig: null
+                  operatorLogLevel: Normal
+                  proxy: {}
+                  replicas: 1
+                  requests:
+                    read:
+                      maxWaitInQueue: 0s
+                    write:
+                      maxWaitInQueue: 0s
+                  rolloutStrategy: RollingUpdate
+                  storage:
+                    emptyDir: {}
+                  unsupportedConfigOverrides: null
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: policy-registry-local-cluster-placement
+  namespace: default
+spec:
+  clusterSelector:
+    matchExpressions:
+      - key: name
+        operator: In
+        values:
+          - local-cluster
+  clusterConditions: []
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: policy-registry-local-cluster-placement-binding
+  namespace: default
+placementRef:
+  name: policy-registry-local-cluster-placement
+  apiGroup: apps.open-cluster-management.io
+  kind: PlacementRule
+subjects:
+  - name: policy-registry-local-cluster
+    apiGroup: policy.open-cluster-management.io
+    kind: Policy
